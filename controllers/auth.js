@@ -203,17 +203,19 @@ exports.postReset = (req, res, next) => {
         return user.save();
       })
       .then(result => {
-        transport.sendMail({
-          from: process.env.SENDGRID_EMAIL,
-          to: req.body.email,
-          subject: 'Password reset',
-          html: `
+        transport
+          .sendMail({
+            from: process.env.SENDGRID_EMAIL,
+            to: req.body.email,
+            subject: 'Password reset',
+            html: `
             <p>You requested a password reset</p>
-            <p>Click this <a href="http://localhost:3000/reset/${token}">link</a> to set a new password.</p>
+            <p>Click this <a href="https://gp-cse341-toolshop.herokuapp.com/reset/${token}">link</a> to set a new password.</p>
           `,
-        }).catch(err => {
-          console.log("Sendgrid", err);
-        });
+          })
+          .catch((err) => {
+            console.log('Sendgrid', err);
+          });
         res.redirect('/');
       })
       .catch(err => {
