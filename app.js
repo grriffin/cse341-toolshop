@@ -1,7 +1,7 @@
 const path = require('path');
 const PORT = process.env.PORT || 3000;
 const csrf = require('csurf');
-const MONGODB_URL = process.env.MONGODB_URL;
+const MONGODB_URL = process.env.MONGODB_TOOL_URL;
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
@@ -31,7 +31,7 @@ const shopRoutes = require('./routes/shop');
 const authRoutes = require('./routes/auth');
 
 const corsOptions = {
-  origin: 'https://gp-cse341-prove.herokuapp.com/',
+  origin: 'https://gp-cse341-toolshop.herokuapp.com/',
   optionsSuccessStatus: 200,
 };
 
