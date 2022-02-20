@@ -18,6 +18,7 @@
                     type="text" 
                     name="title" 
                     id="title" 
+                    minlength="3"
                     value="<% if (editing || hasError) { %><%= product.title %><% } %>">
             </div>
             <div class="form-control">
@@ -45,6 +46,8 @@
                     class="<%= validationErrors.find(e => e.param === 'description') ? 'invalid' : '' %>"
                     name="description" 
                     id="description" 
+                    minlength="10"
+                    maxlength="400"
                     rows="5"><% if (editing || hasError) { %><%= product.description %><% } %></textarea>
             </div>
             <% if (editing) { %>

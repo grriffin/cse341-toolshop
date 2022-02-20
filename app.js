@@ -2,6 +2,7 @@ const path = require('path');
 const PORT = process.env.PORT || 3000;
 const csrf = require('csurf');
 const MONGODB_URL = process.env.MONGODB_TOOL_URL;
+const compression = require('compression');
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
@@ -15,6 +16,18 @@ const errorController = require('./controllers/error');
 const User = require('./models/user');
 
 const app = express();
+
+app.use(compression({ filter: shouldCompress }));
+
+function shouldCompress(req, res) {
+  if (req.headers['x-no-compression']) {
+    // don't compress responses with this request header
+    return false;
+  }
+
+  // fallback to standard filter function
+  return compression.filter(req, res);
+}
 
 const store = new MongoDBStore({
   uri: MONGODB_URL,

@@ -25,7 +25,7 @@ router.post(
     body('imageUrl').isURL(),
     body('price').isFloat(),
     body('description')
-      .isLength({ min: 5, max: 400 })
+      .isLength({ min: 10, max: 400 })
       .trim()
   ],
   isAuth,

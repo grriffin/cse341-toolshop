@@ -244,9 +244,37 @@ form {
 }
 
 .user-message--error {
-  border-color: red;
-  background: rgb(255, 176, 176);
-  color: red;
+  border-color: black;
+  background: rgb(114, 35, 35);
+  color: rgb(255, 255, 255);
+}
+
+.notfound_content {
+  width:100%;
+  display:flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.notfound_content h1 {
+  margin: .5em;
+}
+
+.notfound_404 {
+  font-family:Helvetica, sans-serif;
+  color:gray;
+  font-size:100px;
+  font-weight: bold;
+  margin: .5em 0 0 0;
+}
+
+.error_page {
+  width:100%;
+  display:flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
 }
 
 @media (min-width: 768px) {
