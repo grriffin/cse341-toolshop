@@ -2,17 +2,14 @@ const crypto = require('crypto');
 
 const bcrypt = require('bcryptjs');
 const nodemailer = require('nodemailer');
-const sendgridTransport = require('nodemailer-sendgrid-transport');
+const sendgridTransport = require('nodemailer-sendgrid');
 const { validationResult } = require('express-validator');
 
 const User = require('../models/user');
 
-const transporter = nodemailer.createTransport(
+const transport = nodemailer.createTransport(
   sendgridTransport({
-    auth: {
-      api_key:
-        process.env.SENDGRID_KEY
-    }
+    apiKey: process.env.SENDGRID_KEY,
   })
 );
 
@@ -206,18 +203,21 @@ exports.postReset = (req, res, next) => {
         return user.save();
       })
       .then(result => {
-        res.redirect('/');
-        transporter.sendMail({
-          to: req.body.email,
+        transport.sendMail({
           from: process.env.SENDGRID_EMAIL,
+          to: req.body.email,
           subject: 'Password reset',
           html: `
             <p>You requested a password reset</p>
             <p>Click this <a href="http://localhost:3000/reset/${token}">link</a> to set a new password.</p>
-          `
+          `,
+        }).catch(err => {
+          console.log("Sendgrid", err);
         });
+        res.redirect('/');
       })
       .catch(err => {
+        console.log(err);
         const error = new Error(err);
         error.httpStatusCode = 500;
         return next(error);
